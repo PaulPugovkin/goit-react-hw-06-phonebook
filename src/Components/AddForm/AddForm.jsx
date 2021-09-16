@@ -1,20 +1,24 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/actions';
 import { useState } from 'react';
 import styles from './AddForm.module.css';
 
-function AddForm(props) {
+function AddForm() {
+    const dispatch = useDispatch();
+
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 
     const onInputChange = value => {
-        props.onInputChange(value);
         if (value.target.name === 'name') setName(value.target.value);
         if (value.target.name === 'number') setNumber(value.target.value);
     };
 
     const onUserSubmit = e => {
         e.preventDefault();
-        props.onSubmit();
+        dispatch(addContact(name, number));
+
         setName('');
         setNumber('');
     };
